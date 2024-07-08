@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Recolección de Datos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e1e;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
+            color: #2c3e50;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            max-width: 200px;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(5px);
+            opacity: 0.5;
+            background-size: cover;
+        }
+
+        .background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-field {
+            padding: 15px;
+            margin-top: 10px;
+            border: 1px solid #34495e;
+            border-radius: 25px;
+            font-size: 16px;
+            width: 80%;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: #95a5a6;
+        }
+
+        .button {
+            padding: 15px 30px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            background-color: #2980b9;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #3498db;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <img src="https://www.dropbox.com/scl/fi/kumsmugej2e8i0vlhvajt/ZVERDDE_1.jpg?rlkey=owmc2tdhzpulo0cdey01o5w9y&st=thwasq9d&dl=1" alt="Fondo 1">
+        <img src="https://www.dropbox.com/scl/fi/rq9avkmhp4xls5n6bjwnq/ZVERDE_2.jpg?rlkey=04uqau4wg4w7je83jge55pacq&st=vuzf091h&dl=1" alt="Fondo 2">
+    </div>
+    <div class="container" id="main-container">
+        <div class="logo-container">
+            <img src="https://www.dropbox.com/scl/fi/mgywqzbwl5ss5tubf5gv6/LOGO_COLOR.jpg.jpg?rlkey=bod3wghu6zprpeclld3p1dbkm&st=m5ah370n&dl=1" alt="Logo" class="logo">
+        </div>
+        <h1>Formulario de Recolección de Datos</h1>
+        <form id="data-form">
+            <input type="text" name="nombre" class="input-field" placeholder="Nombre" required>
+            <input type="email" name="correo" class="input-field" placeholder="Correo Electrónico" required>
+            <input type="tel" name="telefono1" class="input-field" placeholder="Número de Teléfono 1" required>
+            <input type="tel" name="telefono2" class="input-field" placeholder="Número de Teléfono 2" required>
+            <select name="metodo" class="input-field" required>
+                <option value="" disabled selected>Método de Adquisición</option>
+                <option value="Método 1">Método 1</option>
+                <option value="Método 2">Método 2</option>
+                <option value="Método 3">Método 3</option>
+                <option value="Personalizado">Personalizado</option>
+            </select>
+            <input type="date" name="fecha" class="input-field" required>
+            <input type="time" name="hora" class="input-field" required>
+            <button type="submit" class="button">Enviar</button>
+        </form>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('data-form');
+        const resultContainer = document.getElementById('result');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxGh95nS710-bE9CHt9i2G0Gyj7ODiBpguoLcTz47YOFXFEe8whMx9DKOE04ORF9NJzbg/exec';
+
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => response.text())
+                .then(response => {
+                    resultContainer.textContent = 'Datos enviados correctamente.';
+                    form.reset();
+                })
+                .catch(error => {
+                    resultContainer.textContent = 'Error al enviar los datos. Intente nuevamente.';
+                });
+        });
+    </script>
+</body>
+</html>
