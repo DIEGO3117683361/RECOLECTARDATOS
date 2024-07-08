@@ -149,7 +149,7 @@
             fetch(scriptURL, { method: 'POST', body: formData })
                 .then(response => response.text())
                 .then(response => {
-                    resultContainer.textContent = 'Datos enviados correctamente.';
+                    resultContainer.textContent = 'Gracias por registrar tus datos, muy pronto nos comunicaremos contigo.';
                     form.reset();
                 })
                 .catch(error => {
